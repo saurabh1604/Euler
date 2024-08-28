@@ -22,6 +22,7 @@ st.sidebar.header("User Inputs")
 turns = st.sidebar.slider("Number of Turns (Years)", min_value=1, max_value=10, value=6, step=1)
 points_per_turn = st.sidebar.slider("Points Per Year", min_value=20, max_value=100, value=70, step=10)
 planet_offset_factor = st.sidebar.slider("Distance from Time Spiral", min_value=0.5, max_value=2.0, value=1.0, step=0.1)
+animation_speed = st.sidebar.slider("Animation Speed (ms per frame)", min_value=10, max_value=100, value=30, step=5)
 
 # Calculate the data for the spiral and planets
 theta = np.linspace(0, 2 * np.pi * turns, points_per_turn * turns)
@@ -44,7 +45,8 @@ for i in range(0, len(theta), max(1, len(theta)//100)):
     frame_data.append(go.Scatter3d(x=x_spiral[:i+1], y=y_spiral[:i+1], z=z[:i+1], 
                                    mode='lines', line=dict(color='blue', width=4), name='Time Spiral'))
 
-    # Planetary Orbits
+    # Planetary Orbits with markers
+    colors = ['red', 'green', 'orange']
     for j in range(1, 4):  # Simulating 3 planets with distinct orbits
         radius = planet_offset_factor * j
         speed = 1 / j  # Simulate different orbital speeds for each planet
@@ -53,8 +55,10 @@ for i in range(0, len(theta), max(1, len(theta)//100)):
         y_planet = radius * np.sin(speed * theta[:i+1])
         z_planet = z[:i+1]
 
-        frame_data.append(go.Scatter3d(x=x_planet, y=y_planet, z=z_planet, mode='lines', 
-                                       line=dict(width=2), name=f'Planet {j}'))
+        frame_data.append(go.Scatter3d(x=x_planet, y=y_planet, z=z_planet, mode='lines+markers',
+                                       line=dict(width=2, color=colors[j-1]), 
+                                       marker=dict(size=4, color=colors[j-1]), 
+                                       name=f'Planet {j}'))
 
     frames.append(go.Frame(data=frame_data, name=str(i)))
 
@@ -62,6 +66,7 @@ for i in range(0, len(theta), max(1, len(theta)//100)):
 fig.add_trace(go.Scatter3d(x=x_spiral[:1], y=y_spiral[:1], z=z[:1], 
                            mode='lines', line=dict(color='blue', width=4), name='Time Spiral'))
 
+colors = ['red', 'green', 'orange']
 for j in range(1, 4):
     radius = planet_offset_factor * j
     speed = 1 / j
@@ -70,15 +75,18 @@ for j in range(1, 4):
     y_planet = radius * np.sin(speed * theta[:1])
     z_planet = z[:1]
 
-    fig.add_trace(go.Scatter3d(x=x_planet, y=y_planet, z=z_planet, mode='lines', 
-                               line=dict(width=2), name=f'Planet {j}'))
+    fig.add_trace(go.Scatter3d(x=x_planet, y=y_planet, z=z_planet, mode='lines+markers', 
+                               line=dict(width=2, color=colors[j-1]), 
+                               marker=dict(size=4, color=colors[j-1]), 
+                               name=f'Planet {j}'))
 
 # Configure layout and sliders for the animation
 fig.update_layout(
+    title="Time Spiral and Planetary Motion Visualization",
     scene=dict(
         xaxis_title='Real Part',
         yaxis_title='Imaginary Part',
-        zaxis_title='Time',
+        zaxis_title='Time (Years)',
         xaxis=dict(range=[-3, 3]),
         yaxis=dict(range=[-3, 3]),
         zaxis=dict(range=[0, turns]),
@@ -86,14 +94,14 @@ fig.update_layout(
     updatemenus=[dict(type="buttons",
                       buttons=[dict(label="Play",
                                     method="animate",
-                                    args=[None, {"frame": {"duration": 30, "redraw": True},
+                                    args=[None, {"frame": {"duration": animation_speed, "redraw": True},
                                                  "fromcurrent": True, "mode": "immediate"}]),
                                dict(label="Pause",
                                     method="animate",
                                     args=[[None], {"frame": {"duration": 0, "redraw": True},
                                                    "mode": "immediate"}])])],
     sliders=[dict(steps=[dict(method="animate",
-                              args=[[f.name], {"frame": {"duration": 30, "redraw": True},
+                              args=[[f.name], {"frame": {"duration": animation_speed, "redraw": True},
                                                "mode": "immediate"}],
                               label=f.name) for f in frames],
                  active=0)]
@@ -135,7 +143,8 @@ Euler’s Identity, $e^{i\pi} + 1 = 0$, can be seen as both expansive and contra
 #### Why This Matters:
 - **Balance of Forces:** Euler’s Identity embodies the balance of expansion and contraction—forces that are fundamental to the universe. In the context of cosmology, these forces could be likened to the interplay between dark energy (which drives expansion) and gravity (which can cause contraction). This delicate balance is captured in a simple mathematical expression, demonstrating that the universe’s complexity can be described through elegant, underlying principles.
 
-- **The Circle of Life and Death:** The circular motion in Euler’s formula, combined with the contraction to zero, can be seen as a metaphor for the cycles of life and death, growth and decay, expansion and contraction. These are universal principles that govern not just physical processes but also many natural and social phenomena.
+- **The Circle of Life and Death:** The circular motion in Euler’s formula, combined with the contraction to zero, can be seen as a metaphor for the cycles of life and death, growth and decay, expansion and contraction. These are universal principles that govern not
+ just physical processes but also many natural and social phenomena.
 
 - **Unified View of the Universe:** The constants in Euler’s Identity—$e$, $i$, $\pi$, 1, and 0—each play a role in various branches of mathematics and physics. By bringing them together in one equation, Euler’s Identity provides a unified view of these seemingly disparate concepts, suggesting that the underlying structure of the universe is fundamentally connected.
 
