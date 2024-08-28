@@ -19,8 +19,8 @@ In this app, we'll visualize the concept of planetary motion as observed from a 
 
 # User Inputs
 st.sidebar.header("User Inputs")
-turns = st.sidebar.slider("Number of Turns (Years)", min_value=1, max_value=5, value=3, step=1)
-points_per_turn = st.sidebar.slider("Points Per Year", min_value=20, max_value=100, value=50, step=10)
+turns = st.sidebar.slider("Number of Turns (Years)", min_value=1, max_value=10, value=6, step=1)
+points_per_turn = st.sidebar.slider("Points Per Year", min_value=20, max_value=100, value=70, step=10)
 planet_offset_factor = st.sidebar.slider("Distance from Time Spiral", min_value=0.5, max_value=2.0, value=1.0, step=0.1)
 
 # Calculate the data for the spiral and planets
