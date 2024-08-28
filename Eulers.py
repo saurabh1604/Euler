@@ -9,7 +9,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 # Explanation and Introduction
-st.title(r"Euler's Formula and Planetary Motion Visualization")
+st.title(r"Euler's Formula and Planetary Motion")
 st.markdown(r"""
 Euler's formula, stated as $e^{ix} = \cos(x) + i\sin(x)$, is a fundamental relationship in mathematics that shows a deep connection between exponential functions, trigonometry, and complex numbers.
 This relationship can be visualized as a circular motion in the complex plane. When we introduce time, this circular motion becomes a helical path.
