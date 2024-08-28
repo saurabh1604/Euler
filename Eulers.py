@@ -9,7 +9,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 # Explanation and Introduction
-st.title(r"Euler's Formula, $\pi$, and Planetary Motion Visualization")
+st.title(r"Euler's Formula and Planetary Motion Visualization")
 st.markdown(r"""
 Euler's formula, stated as $e^{ix} = \cos(x) + i\sin(x)$, is a fundamental relationship in mathematics that shows a deep connection between exponential functions, trigonometry, and complex numbers.
 This relationship can be visualized as a circular motion in the complex plane. When we introduce time, this circular motion becomes a helical path.
@@ -19,7 +19,7 @@ In this app, we'll visualize the concept of planetary motion as observed from a 
 
 # User Inputs
 st.sidebar.header("User Inputs")
-turns = st.sidebar.slider("Number of Turns (Years)", min_value=1, max_value=10, value=6, step=1)
+turns = st.sidebar.slider("Number of Turns (Years)", min_value=1, max_value=10, value=8, step=1)
 points_per_turn = st.sidebar.slider("Points Per Year", min_value=20, max_value=100, value=70, step=10)
 planet_offset_factor = st.sidebar.slider("Distance from Time Spiral", min_value=0.5, max_value=2.0, value=1.0, step=0.1)
 
